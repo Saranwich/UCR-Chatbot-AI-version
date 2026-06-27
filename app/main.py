@@ -35,7 +35,15 @@ def handle_message(event):
     user_id = event.source.user_id   # ใครเป็นคนส่ง -> ใช้แยก history แต่ละคน
 
     # 📌 สั่งงานสมอง (AI) ผ่านฟังก์ชันที่เราแยกไว้
-    ai_reply_text = get_ai_response(user_id, user_message)
+    status, ai_text = get_ai_response(user_id, user_message)
+
+    if status == "ok":
+        ai_reply_text = ai_text
+        # TODO: ใส่ save_report ตรงนี้ทีหลัง (save เฉพาะตอนสำเร็จ)
+    elif status == "rate_limit":
+        ai_reply_text = "ตอนนี้ระบบมีคนใช้งานเยอะ ติดลิมิตชั่วคราวครับ 🙏 รอสักครู่แล้วลองใหม่นะครับ"
+    else:  # "error"
+        ai_reply_text = "ระบบ AI มีปัญหา ลองพิมพ์ใหม่อีกครั้งนะครับ 🙏"
 
     # ส่งข้อความจาก AI ตอบกลับไปหา User ใน LINE
     with ApiClient(line_config) as api_client:
