@@ -39,7 +39,7 @@ def handle_message(event):
 
     if status == "ok":
         ai_reply_text = ai_text
-        # TODO: ใส่ save_report ตรงนี้ทีหลัง (save เฉพาะตอนสำเร็จ)
+        # save เกิดในตัว AI แล้ว (ฟ้าเรียก tool record_complaint เองเมื่อข้อมูลครบ)
     elif status == "rate_limit":
         ai_reply_text = "ตอนนี้ระบบมีคนใช้งานเยอะ ติดลิมิตชั่วคราวครับ 🙏 รอสักครู่แล้วลองใหม่นะครับ"
     else:  # "error"

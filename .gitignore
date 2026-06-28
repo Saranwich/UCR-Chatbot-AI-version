@@ -13,6 +13,9 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 
+# Data (ข้อมูลร้องเรียนจริง มี user_id ห้าม commit)
+reports.csv
+
 # IDE / OS
 .vscode/
 .idea/
