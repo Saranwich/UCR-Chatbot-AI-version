@@ -104,6 +104,11 @@ def get_ai_response(user_id: str, user_message: str) -> tuple[str, str | None]:
         response = chat_sessions[user_id].send_message(user_message)
         text = response.text
 
+        # gemma คืน text=None ได้ (safety block / candidate ว่าง) -> กัน TypeError ตอนเช็ก marker
+        if text is None:
+            print(f"[AI EMPTY] user={user_id}: response.text is None")
+            return ("error", None)
+
         if SAVE_MARKER in text:
             reply, _, block = text.partition(SAVE_MARKER)
             save_report(user_id, **_parse_block(block))
